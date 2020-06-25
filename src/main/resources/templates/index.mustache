@@ -5,12 +5,18 @@
     <title>Getting Started: Serving Web Content</title>
 </head>
 <body>
-    <p>Get your greeting <a href="/greeting">here</a></p>
+    <div>
+        <form action="/logout" method="post">
+            <input type="submit" value="Sign Out">
+            <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
+        </form>
+    </div>
 
     <div>
         <form method="post">
             <input type="text" name="text" placeholder="Введите сообщение"/>
             <input type="text" name="tag" placeholder="Введите Тэг"/>
+            <input type="hiden" name="_csrf" value="{{_csrf.token}}"/>
             <button type="submit">Добавить</button>
         </form>
     </div>
@@ -19,6 +25,7 @@
     <p>Filter</p>
     <form method="post" action="/filter">
         <input type="text" name="filter">
+        <input type="hidden" name="_csrf" value="{{_csrf.token}}"/>
         <button type="submit">Найти</button>
     </form>
 </div>
