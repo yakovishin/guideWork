@@ -1,11 +1,13 @@
 package ru.followGuide.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import ru.followGuide.domain.Message;
+import ru.followGuide.domain.User;
 import ru.followGuide.repositories.MessageRepository;
 
 import java.util.Map;
@@ -29,8 +31,11 @@ public class MainController {
     }
 
     @PostMapping("/index")
-    public String add(@RequestParam String text, @RequestParam String tag, Map<String, Object> model) {
-        Message message = new Message(text, tag);
+    public String add(@AuthenticationPrincipal User user,
+                      @RequestParam String text,
+                      @RequestParam String tag,
+                      Map<String, Object> model) {
+        Message message = new Message(text, tag, user);
         if (text != null && !text.isEmpty() && tag != null && !tag.isEmpty()){
             messageRepository.save(message);
         }
