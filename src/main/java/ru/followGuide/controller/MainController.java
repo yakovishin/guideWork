@@ -11,6 +11,8 @@ import ru.followGuide.domain.Message;
 import ru.followGuide.domain.User;
 import ru.followGuide.repositories.MessageRepository;
 
+import java.util.Map;
+
 @Controller
 public class MainController {
 
@@ -23,8 +25,8 @@ public class MainController {
     }
 
     @GetMapping("/index")
-    public String index(@RequestParam(required = false) String filter, Model model){
-        Iterable<Message> messages = messageRepository.findAll();
+    public String index(@RequestParam(required = false, defaultValue = "") String filter, Model model){
+        Iterable<Message> messages;
         if (filter != null && !filter.isEmpty() ){
             messages = messageRepository.findByTag(filter);
         }else {
@@ -39,13 +41,11 @@ public class MainController {
     public String add(@AuthenticationPrincipal User user,
                       @RequestParam String text,
                       @RequestParam String tag,
-                      Model model) {
+                      Map<String, Object> model) {
         Message message = new Message(text, tag, user);
-        if (text != null && !text.isEmpty() && tag != null && !tag.isEmpty()){
             messageRepository.save(message);
-        }
         Iterable<Message> messages = messageRepository.findAll();
-        model.addAttribute("messages", messages);
+        model.put("messages", messages);
         return "index";
     }
 }
