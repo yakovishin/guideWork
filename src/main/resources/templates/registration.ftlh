@@ -4,4 +4,5 @@
     <h1>Add new User</h1>
        <div> ${message!}</div>
     <@l.login "/registration"/>
+
 </@c.page>
