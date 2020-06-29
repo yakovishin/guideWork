@@ -1,8 +1,10 @@
 <#import "parts/common.ftlh" as c>
 <#import "parts/login.ftlh" as l>
 <@c.page>
-    <h1>Add new User</h1>
+    <div class="mb-1">
+        <h1>Add new User</h1>
+    </div>
        <div> ${message!}</div>
-    <@l.login "/registration"/>
+    <@l.login "/registration" true/>
 
 </@c.page>
