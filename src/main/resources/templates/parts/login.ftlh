@@ -12,6 +12,14 @@
                 <input type="password" name="password" placeholder="password" class="from-control"/>
             </div>
         </div>
+ <#if isRegisterForm>
+        <div class="form-group row">
+            <label class="col-sm-2 col-form-label">Email </label>
+            <div class="col-sm-6">
+                <input type="email" name="email" placeholder="some@some.com" class="from-control"/>
+            </div>
+        </div>
+        </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
         <div>
             <#if !isRegisterForm>
