@@ -1,6 +1,9 @@
 package ru.followGuide.domain;
 
+import org.hibernate.validator.constraints.Length;
+
 import javax.persistence.*;
+import javax.validation.constraints.NotBlank;
 
 
 @Entity
@@ -9,7 +12,10 @@ public class Message {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
+    @NotBlank(message = "Please fill the message")
+    @Length(max = 2048, message = "Too Long Message (more than 2kB)")
     private String text;
+    @Length(max = 255, message = "Too Long tag (more than 255)")
     private String tag;
     private String filename;
 
