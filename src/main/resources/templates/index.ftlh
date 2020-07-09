@@ -6,6 +6,7 @@
             <input type="text" name="filter" value="${filter!}" class="" placeholder="Search by tag">
             <button type="submit"  class="btn btn-primary ml-2">Search</button>
         </form>
+
         <a class="btn btn-primary ml-2" data-toggle="collapse" href="#collapseExample" role="button" aria-expanded="false" aria-controls="collapseExample">
             Add new Message
         </a>
@@ -19,9 +20,9 @@
                            value="<#if message??>${message.text}</#if>"
                            placeholder="Введите сообщение">
                     <#if textError??>
-                    <div class="invalid-feedback">
-                        ${textError}
-                    </div>
+                        <div class="invalid-feedback">
+                            ${textError}
+                        </div>
                     </#if>
                 </div>
                 <div class="form-group">
@@ -37,30 +38,13 @@
                     <label class="custom-file-label" for="custom_id">Choose file</label>
                 </div>
                 <input type="hidden" name="_csrf" value="${_csrf.token}"/>
+
                 <div class="form-group mt-3">
                     <button type="submit"  class="btn btn-primary">Добавить</button>
                 </div>
             </form>
         </div>
     </div>
-    <div class="card-columns">
-        <#list messages as message >
-            <div class="card my-3">
-                <div>
-                    <#if message.filename??>
-                        <img class="card-img-top" src="/img/${message.filename}"
-                    </#if>
-                </div>
-                <div class="m-2">
-                    <span>${message.text}</span>
-                    <i>${message.tag}</i>
-                </div>
-                <div class="card-footer text-muted">
-                    ${message.authorName}
-                </div>
-            </div>
-        <#else>
-            No messages
-        </#list>
-    </div>
+<#include "parts/messageEdit.ftlh" />
+<#include "parts/messageList.ftlh"/>
 </@c.page>
