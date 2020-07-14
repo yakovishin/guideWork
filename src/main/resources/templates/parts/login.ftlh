@@ -1,4 +1,5 @@
 <#macro login path isRegisterForm>
+    <#include "security.ftlh">
     <form action="${path}" method="post">
         <div class="form-group row">
             <label class="col-sm-2 col-form-label"> User Name: </label>
@@ -56,15 +57,16 @@
         </#if>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
             <#if !isRegisterForm>
-                <a class="btn btn-primary" href="/registration">Add new User</a>
+                <a class="btn btn-danger" href="/registration">Add new User</a>
             </#if>
-            <button class="btn btn-primary" type="submit"><#if isRegisterForm>Created <#else> Sing In</#if></button>
+            <button class="btn btn-primary" type="submit"><#if isRegisterForm>Created <#else> SingIn</#if></button>
     </form>
 </#macro>
 
 <#macro logout>
+    <#include "security.ftlh">
     <form action="/logout" method="post">
-        <button class="btn btn-primary" type="submit">Sign out</button>
+        <button class="btn btn-primary" type="submit"><#if user??>Sign out<#else>Login</#if></button>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
 </#macro>

@@ -2,6 +2,10 @@ package ru.followGuide.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -37,20 +41,25 @@ public class MainController {
             return "greeting";
     }
 
-    @GetMapping("/index")
-    public String index(@RequestParam(required = false, defaultValue = "") String filter, Model model){
-        Iterable<Message> messages;
+    @GetMapping("/main")
+    public String index(
+            @RequestParam(required = false, defaultValue = "") String filter,
+            Model model,
+            @PageableDefault(sort = {"id"}, direction = Sort.Direction.DESC) Pageable pageable
+    ){
+        Page<Message> page;
         if (filter != null && !filter.isEmpty() ){
-            messages = messageRepository.findByTag(filter);
+            page = messageRepository.findByTag(filter, pageable);
         }else {
-            messages = messageRepository.findAll();
+            page = messageRepository.findAll(pageable);
         }
-        model.addAttribute("messages", messages);
+        model.addAttribute("page", page);
+        model.addAttribute("url", "/main");
         model.addAttribute("filter", filter);
-        return "index";
+        return "main";
     }
 
-    @PostMapping("/index")
+    @PostMapping("/main")
     public String add(
                       @AuthenticationPrincipal User user,
                       @Valid Message message,
@@ -72,7 +81,7 @@ public class MainController {
         Iterable<Message> messages = messageRepository.findAll();
         model.addAttribute("messages", messages);
 
-        return "index";
+        return "main";
     }
 
     private void saveFile(@Valid Message message, @RequestParam MultipartFile file) throws IOException {
@@ -97,6 +106,10 @@ public class MainController {
             Model model
     ){
         Set<Message> messages = user.getMessages();
+        model.addAttribute("userChannel", user);
+        model.addAttribute("subscriptionsCount", user.getSubscriptions().size());
+        model.addAttribute("subscribersCount", user.getSubscribers().size());
+        model.addAttribute("isSubscriber", user.getSubscribers().contains(currentUser));
         model.addAttribute("messages", messages);
         model.addAttribute("message", message);
         model.addAttribute("isCurrentUser", currentUser.equals(user));

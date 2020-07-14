@@ -1,5 +1,6 @@
 <#include "security.ftlh">
 <#import "login.ftlh" as l>
+
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
     <a class="navbar-brand" href="/"><h1>GuideWork</h1></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
@@ -13,7 +14,7 @@
             </li>
             <#if user??>
             <li class="nav-item">
-                <a class="nav-link" href="/index">Messages </a>
+                <a class="nav-link" href="/main">Messages </a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/user-messages/${currentUserId}">My messages </a>
@@ -30,7 +31,8 @@
                 </li>
             </#if>
         </ul>
-        <div class="navbar-text mr-3"><h4>${name}</h4></div>
+
+        <div class="navbar-text mr-3"><#if user??>${name}<#else>Please login</#if></div>
         <@l.logout/>
     </div>
 </nav>
