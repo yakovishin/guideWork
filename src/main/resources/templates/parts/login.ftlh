@@ -59,14 +59,14 @@
             <#if !isRegisterForm>
                 <a class="btn btn-danger" href="/registration">Add new User</a>
             </#if>
-            <button class="btn btn-primary" type="submit"><#if isRegisterForm>Created <#else> SingIn</#if></button>
+            <button class="btn btn-primary" type="submit"><#if isRegisterForm>Created <#else> Sing In</#if></button>
     </form>
 </#macro>
 
 <#macro logout>
     <#include "security.ftlh">
     <form action="/logout" method="post">
-        <button class="btn btn-primary" type="submit"><#if user??>Sign out<#else>Login</#if></button>
+        <button class="btn btn-primary" type="submit"><#if user??>Sign out<#else>Log in</#if></button>
         <input type="hidden" name="_csrf" value="${_csrf.token}"/>
     </form>
 </#macro>

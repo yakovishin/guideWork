@@ -10,6 +10,7 @@
     <title>My Project</title>
     <link href="/static/style.css" rel="stylesheet"/>
     <script src="https://www.google.com/recaptcha/api.js"></script>
+    <script src="https://kit.fontawesome.com/5f87d6112a.js" crossorigin="anonymous"></script>
 </head>
 <body>
 <div class="container mt-5">
